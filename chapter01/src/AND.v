@@ -9,8 +9,8 @@ module AND (
     wire intermediate; 
 
     NAND nand_gate (
-        .a(in),
-        .b(in),
+        .a(a),
+        .b(b),
         .out(intermediate)
     );
     NOT not_gate (
