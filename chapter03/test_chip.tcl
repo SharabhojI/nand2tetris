@@ -14,6 +14,7 @@ proc test_chip {chip_name} {
         "../chapter01/src/DMUX8WAY.v" \
         "../chapter01/src/MUX4WAY16.v" \
         "../chapter01/src/MUX8WAY16.v" \
+        "../chapter02/src/HALFADDER.v" \
         "../chapter02/src/INC16.v" \
     ]
 

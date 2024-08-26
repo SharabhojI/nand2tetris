@@ -19,7 +19,7 @@ module RAM512 (
     output [15:0] out
 );
     wire [7:0] ram_in;
-    wire [7:0] ram_out [15:0];
+    wire [15:0] ram_out [7:0];
 
     DMUX8WAY dmux (
         .in(load),
