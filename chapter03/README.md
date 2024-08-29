@@ -33,6 +33,20 @@ To run tests on all implemented chips:
 
 This will execute the `test_chip.tcl` script, which compiles, elaborates, and simulates each chip listed in `chip_list.txt`.
 
+## Known Issues
+
+### RAM16K Testing
+
+Significant difficulties were encountered in testing the RAM16K module:
+
+1. **Simulation Challenges**: Attempts to simulate the RAM16K module resulted in excessive memory usage, causing system instability (blue screens).
+
+2. **FPGA Implementation**: The RAM16K module, as designed in the textbook using a hierarchical structure of smaller RAM units, exceeds the available resources when attempting to test on the PYNQ-Z2 board's FPGA (Xilinx Zynq XC7Z020).
+
+3. **Testing Limitations**: Due to these constraints, full testing of the RAM16K module as specified in the textbook was not feasible.
+
+These issues highlight the challenges of mapping theoretical designs to real-world hardware constraints, especially when dealing with larger memory structures.
+
 ## Adding New Chips
 
 To add a new chip:
