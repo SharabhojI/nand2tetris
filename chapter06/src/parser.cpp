@@ -11,15 +11,11 @@ Parser::Parser(std::string input_file) {
 }
 
 bool Parser::hasMoreLines() {
-    if (eof_reached) {
-        return false;
-    }
     return input_file.peek() != EOF;
 }
 
 void Parser::advance() {
     if (!hasMoreLines()) {
-        eof_reached = true;
         current_inst = "";
         return;
     }
@@ -40,7 +36,6 @@ void Parser::advance() {
     } while (current_inst.empty() && hasMoreLines());
 
     if (current_inst.empty()) {
-        eof_reached = true;
         return;
     }
 

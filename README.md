@@ -1,2 +1,2 @@
-# nand2tetris-verilog
-Implementation of the nand2tetris project from textbook "The Elements of Computing Systems"
+# nand2tetris
+Implementation of the NAND To Tetris project from textbook "The Elements of Computing Systems"

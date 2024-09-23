@@ -18,10 +18,9 @@ public:
     std::string jump();
 
 private:
-    InstructionType current_inst_type;
     std::ifstream input_file;
     std::string current_inst;
-    bool eof_reached = false;
+    InstructionType current_inst_type;
 };
 
 #endif // PARSER_H
