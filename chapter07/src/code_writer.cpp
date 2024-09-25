@@ -1,10 +1,12 @@
 #include "code_writer.h"
 #include <iostream>
 #include <stdexcept>
+#include<filesystem>
 
 CodeWriter::CodeWriter(std::string output_file) {
     this->label_num = 0;
-    this->file_name = output_file.substr(0, output_file.find('.')); // get file name without ext
+    std::filesystem::path p(output_file);
+    this->file_name = p.stem().string(); // get file name without ext
     this->output_file.open(output_file);
     if (!this->output_file.is_open()) {
         throw std::runtime_error("Unable to open file: " + file_name);
@@ -19,7 +21,7 @@ void CodeWriter::writeArithmetic(std::string command) {
         writeSub();
     } else if (command == "neg") {
         writeNeg();
-    } else if (command == "eq" || "gt" || "lt") {
+    } else if (command == "eq" || command == "gt" || command == "lt") {
         writeCompare(command);
     } else if (command == "and") {
         writeAnd();
@@ -75,7 +77,7 @@ void CodeWriter::writeCompare(std::string comparisonType) {
     output_file << "@R5" << std::endl
                 << "D=M" << std::endl
                 << "@R6" << std::endl
-                << "D=D-M" << std::endl;
+                << "D=M-D" << std::endl;
 
     if (comparisonType == "eq") {
         output_file << "@" << true_label << std::endl
@@ -100,7 +102,6 @@ void CodeWriter::writeCompare(std::string comparisonType) {
                 << "@SP" << std::endl
                 << "A=M" << std::endl
                 << "M=-1" << std::endl;
-
     // End
     output_file << "(" << end_label << ")" << std::endl
                 << "@SP" << std::endl
@@ -132,7 +133,7 @@ void CodeWriter::writeOr() {
 void CodeWriter::writeNot() {
     output_file << "// not" << std::endl;
     writePushPop(C_POP, "temp", 0); // pop to @R5 (TEMP[0])
-    output_file << "@5" << std::endl
+    output_file << "@R5" << std::endl
                 << "M=!M" << std::endl; // NOT value and store in @R5
     writePushPop(C_PUSH, "temp", 0); // push @R5 to the stack
 }
@@ -226,9 +227,10 @@ void CodeWriter::writePop(std::string segment, int index) {
 } 
 
 void CodeWriter::close() {
-    this->output_file.close();
-    if (this->output_file.is_open()) {
-        throw std::runtime_error("Unable to close file: " + file_name);
+    try {
+        this->output_file.close();
+        std::cout << "Closed file: " << file_name << std::endl;
+    } catch (const std::ios_base::failure& e) {
+        throw std::runtime_error("Failed to close file: " + file_name + ". Error: " + e.what());
     }
-    std::cout << "Closed file" << file_name << std::endl;
 }

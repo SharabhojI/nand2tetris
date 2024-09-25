@@ -77,18 +77,20 @@ std::string Parser::arg1() {
         if (second != std::string::npos) {
             return current_cmd.substr(first + 1, second - first - 1);
         }
+        return current_cmd.substr(first + 1);
     } else { 
         throw std::runtime_error("arg1() called with incorrect command type");
     }
 }
 
 int Parser::arg2() {
-    if (current_cmd_type == C_PUSH || C_POP || C_FUNCTION || C_CALL) {
+    if (current_cmd_type == C_PUSH || current_cmd_type == C_POP || current_cmd_type == C_FUNCTION || current_cmd_type == C_CALL) {
         size_t first = current_cmd.find(' ');
         size_t second = current_cmd.find(' ', first + 1);
         if (second != std::string::npos) {
             return std::stoi(current_cmd.substr(second + 1));
         }
+        throw std::runtime_error("Invalid command format for arg2()");
     } else {
         throw std::runtime_error("arg2() called with incorrect command type");
     }
