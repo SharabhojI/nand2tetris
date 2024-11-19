@@ -1,6 +1,6 @@
-# Chapter 7: VM Translator
+# Chapter 8: VM Translator Part II
 
-This folder contains the implementation and testing infrastructure for the VM Translator described in Chapter 7 of "The Elements of Computing Systems" (also known as "Nand to Tetris").
+This folder contains the implementation and testing infrastructure for Part II of the VM Translator described in Chapter 8 of "The Elements of Computing Systems" (also known as "Nand to Tetris").
 
 ## Contents
 
@@ -14,13 +14,20 @@ The `src` folder contains C++ implementation files (`.cpp`) and their correspond
 - code_writer.cpp / code_writer.h
 
 ### Test Files (/test/)
-The `test` folder contains VM (`.vm`) test programs:
+The `test` folder contains VM (`.vm`) test programs and sub-folders containing other VM (`.vm`) test programs:
 
-- BasicTest.vm
-- PointerTest.vm
-- SimpleAdd.vm
-- StackTest.vm
-- StaticTest.vm
+- BasicLoop.vm
+- FibonacciSeries.vm
+- SimpleFunction.vm
+- `/FibonacciElement/` (sub-folder)
+   - Main.vm
+   - Sys.vm
+- `/NestedCall/` (sub-folder)
+   - Sys.vm
+- `/StaticsTest/` (sub-folder)
+   - Class1.vm
+   - Class2.vm
+   - Sys.vm
 
 ## Running Tests
 
@@ -29,7 +36,7 @@ To compile the VM Translator and run translations on all test programs:
 1. Ensure you have a C++ compiler (g++) installed and properly set up.
 2. Run the `run_test.bat` script.
 
-This will compile the VM Translator into an executable (VMTranslator.exe) and then translate each test program in the `test` folder. The generated `.asm` files can be tested using the CPU Emulator available at https://nand2tetris.github.io/web-ide/cpu.
+This will compile the VM Translator into an executable (VMTranslator.exe) and then translate each test program in the `test` folder and its sub-folders. The `.asm` files will be generated within their respective folders. The generated `.asm` files can be tested using the CPU Emulator available at https://nand2tetris.github.io/web-ide/cpu.
 
 ## VM Translator Structure
 
@@ -47,6 +54,10 @@ The `run_test.bat` script performs the following steps:
 2. For each `.vm` file in the `test` folder:
    - Runs the VM Translator on the `.vm` file.
    - Generates a corresponding `.asm` file.
+3. For each sub-folder in the `test` folder:
+   - Runs the VM Translator on all the `.vm` files.
+   - Generates an `.asm` file with the name of the subfolder.
+
 
 ## Testing
 
@@ -69,3 +80,7 @@ To add a new test program:
 2. Modify the `run_test.bat` script to include the new test program in its list of files to process.
 
 Remember to test the generated `.asm` file using the CPU Emulator to verify correct translation.
+
+## Known Errors
+
+The current implementation passes all tests with the exception of the NestedCall test, where `RAM[5]` incorrectly outputs `0` instead of `135`. A fix is currently in progress. 

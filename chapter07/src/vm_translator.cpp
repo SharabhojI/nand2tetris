@@ -12,15 +12,15 @@ void translate(const std::string& input_file, std::string output_file) {
         parser.advance();
 
         switch (parser.commandType()) {
-        case Parser::C_ARITHMETIC:
-            codeWriter.writeArithmetic(parser.arg1());
-            break;
-        case Parser::C_PUSH:
-        case Parser::C_POP:
-            codeWriter.writePushPop(parser.commandType() == Parser::C_PUSH ? CodeWriter::C_PUSH : CodeWriter::C_POP, parser.arg1(), parser.arg2());
-            break;
-        default:
-            throw std::runtime_error("Unknown or unsupported command encountered");
+            case Parser::C_ARITHMETIC:
+                codeWriter.writeArithmetic(parser.arg1());
+                break;
+            case Parser::C_PUSH:
+            case Parser::C_POP:
+                codeWriter.writePushPop(parser.commandType() == Parser::C_PUSH ? CodeWriter::C_PUSH : CodeWriter::C_POP, parser.arg1(), parser.arg2());
+                break;
+            default:
+                throw std::runtime_error("Unknown or unsupported command encountered");
         }
     }
     codeWriter.close();
