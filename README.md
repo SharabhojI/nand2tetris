@@ -1,6 +1,6 @@
-# Nand2Tetris Implementation
+# Nand2Tetris
 
-This repository contains my implementation of the projects from [The Elements of Computing Systems](https://www.nand2tetris.org/), also known as Nand2Tetris. The projects build a modern computer system from first principles, starting with basic logic gates and working up through hardware, architecture, assembler, virtual machine, and compiler.
+This repository contains my implementation of the projects from [The Elements of Computing Systems](https://www.nand2tetris.org/), also known as Nand2Tetris. The projects build a computer system from first principles, starting with basic logic gates and working up through hardware and architecture to an operating system.
 
 ## Project Structure
 
@@ -22,7 +22,7 @@ Future chapters to be implemented:
 
 ## Testing
 
-All implementations are tested using the web-based tools available at [nand2tetris.org/web-ide](https://www.nand2tetris.org/web-ide). This provides an integrated development and testing environment that works directly in the browser, requiring no local software installation.
+All implementations are tested using the web-based tools available at [nand2tetris.github.io/web-ide/chip](https://nand2tetris.github.io/web-ide/chip). This provides an integrated development and testing environment that works directly in the browser, requiring no local software installation.
 
 The web IDE provides:
 - Hardware simulator for testing .hdl files (Chapters 1-5)
@@ -33,4 +33,4 @@ The web IDE provides:
 ## Resources
 
 - [Official Nand2Tetris Website](https://www.nand2tetris.org/)
-- [Nand2Tetris Web IDE](https://www.nand2tetris.org/web-ide)
+- [Nand2Tetris Web IDE](https://nand2tetris.github.io/web-ide/chip)
