@@ -1,0 +1,158 @@
+class Snake {
+    /* fields */
+    field int length, direction;
+    field Array segments;
+
+    /* constants */
+    static int UP, DOWN, LEFT, RIGHT, SEGMENT_SIZE, START_X, START_Y;
+
+    /* constructor */
+    constructor Snake new() {
+        // initializing constants
+        let UP = 1;
+        let DOWN = 2;
+        let LEFT = 3;
+        let RIGHT = 4;
+        let SEGMENT_SIZE = 16; // 16 pixels per segment
+        let START_X = 256;  // middle of the screen
+        let START_Y = 128;  // middle of the screen
+
+        // initialize snake properties
+        let length = 1;
+        let direction = RIGHT;
+        let segments = Array.new(25); // 25 x,y pair segments
+
+        // initialize position
+        let segments[0] = START_X;
+        let segments[1] = START_Y;
+
+        return this;
+    }
+
+    /* movement functions */
+    method void move() {
+        var int newX, newY;
+        var int i, j;
+
+        // current head position
+        let newX = getHeadX();
+        let newY = getHeadY();
+
+        // calculate new head position
+        if (direction = UP) {
+            let newY = newY - SEGMENT_SIZE;
+        } else if (direction = DOWN) {
+            let newY = newY + SEGMENT_SIZE;
+        } else if (direction = LEFT) {
+            let newX = newX - SEGMENT_SIZE;
+        } else if (direction = RIGHT) {
+            let newX = newX + SEGMENT_SIZE;
+        }
+
+        // move segments
+        let i = length * 2 - 1;
+        while (i > 1) {
+            let segments[i] = segments[i - 2];
+            let i = i - 1;
+        }
+
+        // update head position
+        let segments[0] = newX;
+        let segments[1] = newY;
+
+        return;
+    }
+
+    method void changeDirection(int newDirection) {
+        if (newDirection = UP & direction != DOWN) {
+            let direction = UP;
+        } else if (newDirection = DOWN & direction != UP) {
+            let direction = DOWN;
+        } else if (newDirection = LEFT & direction != RIGHT) {
+            let direction = LEFT;
+        } else if (newDirection = RIGHT & direction != LEFT) {
+            let direction = RIGHT;
+        }
+        return;
+    }
+
+    /* growth function */
+    method void grow() {
+        var int tailX, tailY;
+
+        // get tail position
+        let tailX = segments[(length * 2) - 2];
+        let tailY = segments[(length * 2) - 1];
+
+        // add new segment
+        let segments[length * 2] = tailX;
+        let segments[length * 2 + 1] = tailY;
+
+        let length = length + 1;
+        return;
+    }
+
+    /* collision detection */
+    method boolean checkCollision() {
+        var int headX, headY, i;
+
+        // Use getters instead of direct array access
+        let headX = getHeadX();
+        let headY = getHeadY();
+
+        // check for collision with walls
+        if (headX < 0 | headX >= 512 | headY < 0 | headY >= 256) {
+            return true;
+        }
+
+        // check for collision with self
+        let i = 2;
+        while (i < length * 2) {
+            if ((headX = segments[i]) & (headY = segments[i + 1])) {
+                return true;
+            }
+            let i = i + 2;
+        }
+        return false;
+    }
+
+    method boolean checkFoodCollision(int foodX, int foodY) {
+        return (getHeadX() = foodX) & (getHeadY() = foodY);
+    }
+
+    /* utility functions */
+    method void dispose() {
+        do segments.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void draw() {
+        var int i;
+
+        // draw each segment
+        let i = 0;
+        while (i < (length * 2)) {
+            do Screen.drawRectangle(
+                segments[i], 
+                segments[i + 1], 
+                segments[i] = SEGMENT_SIZE - 1, 
+                segments[i + 1] + SEGMENT_SIZE - 1
+            );
+            let i = i + 2;
+        }
+        return;
+    }
+
+    method int getHeadX() {
+        return segments[0];
+    }
+
+    method int getHeadY() {
+        return segments[1];
+    }
+
+    method Array getSegments() {
+        return segments;
+    }
+}

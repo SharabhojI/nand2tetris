@@ -1,0 +1,72 @@
+class Food {
+    /* Fields */
+    field int x, y, size, seed;
+
+    /* static constants */
+    static int MIN_X, MIN_Y, MAX_X, MAX_Y;
+
+    /* constructor */
+    constructor Food new() {
+        let size = 16;
+
+        // initialize constants
+        let MIN_X = 0;
+        let MIN_Y = 0;
+        let MAX_X = 512 - size;
+        let MAX_Y = 256 - size;
+
+        return this;
+    }
+
+    /* randomize function */
+    method void randomize() {
+        // generate random position
+        let seed = seed + 20251;
+        let seed = seed * 2377;
+        let seed = seed / 7;
+        
+        // get x position within bounds
+        let x = seed - ((seed / (MAX_X / size)) * (MAX_X / size));
+        let x = x * size;
+        
+        // get y position within bounds
+        let seed = seed * 2377;
+        let y = seed - ((seed / (MAX_Y / size)) * (MAX_Y / size));
+        let y = y * size;
+        
+        return;
+    }
+
+    /* utility functions */
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void draw() {
+        do Screen.drawCircle(
+            x + (size / 2),  // Center X
+            y + (size / 2),  // Center Y
+            size / 3         // Radius
+        );
+        return;
+    }
+    
+    method void erase() {
+        do Screen.setColor(false);
+        do Screen.drawCircle(
+            x + (size/2),
+            y + (size/2),
+            size/3
+        );
+        return;
+    }
+    
+    method int getX() {
+        return x;
+    }
+    
+    method int getY() {
+        return y;
+    }
+}
