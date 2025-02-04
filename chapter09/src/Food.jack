@@ -15,6 +15,10 @@ class Food {
         let MAX_X = 512 - size;
         let MAX_Y = 256 - size;
 
+        // initialize seed
+        let seed = Memory.peek(0);
+        do randomize();
+
         return this;
     }
 

@@ -1,0 +1,83 @@
+class Game {
+    /* fields */
+    field Snake snake;
+    field Food food;
+    field int score, speed;
+    field boolean gameOver;
+
+    /* constructor */
+    constructor Game new() {
+        let score = 0;
+        let speed = 1; // multiple of 100ms
+        let gameOver = false;
+        let snake = Snake.new();
+        let food = Food.new();
+        return this;
+    }
+
+    /* scoring functions */
+    method void updateScore() {
+        let score = score + 1;
+        return;
+    }
+
+    /* game functions */
+    method void checkCollision() {
+        if (snake.checkCollision()) {
+            let gameOver = true;
+        }
+        if (snake.checkFoodCollision(food.getX(), food.getY())) {
+            do snake.grow();
+            do food.randomize();
+            do updateScore();
+        }
+        return;
+    }
+
+    method void run() {
+        while (~gameOver) {
+            do handleInput();
+            do snake.move();
+            do checkCollision();
+            do Screen.clearScreen();
+            do draw();
+            do Sys.wait(speed * 100); 
+        }
+        return;
+    }
+
+    /* utility functions */
+    method void dispose() {
+        do snake.dispose();
+        do food.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void handleInput() {
+        var char key;
+        let key = Keyboard.keyPressed();
+        if (key = 131) {
+            do snake.changeDirection(1);
+        } else {
+            if (key = 133) {
+                do snake.changeDirection(2);
+            } else {
+                if (key = 130) {
+                    do snake.changeDirection(3);
+                } else {
+                    if (key = 132) {
+                        do snake.changeDirection(4);
+                    }
+                }
+            }
+        } 
+        return;
+    }
+
+    method void draw() {
+        do snake.draw();
+        do food.draw();
+        return;
+    }
+} 

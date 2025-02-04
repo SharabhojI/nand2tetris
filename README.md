@@ -14,9 +14,9 @@ The repository is organized into chapters matching the book structure. Currently
 - [Chapter 6: Assembler](./chapter06) - Hack assembler implementation
 - [Chapter 7: Virtual Machine I](./chapter07) - Stack arithmetic VM implementation
 - [Chapter 8: Virtual Machine II](./chapter08) - Program control VM implementation
+- [Chapter 9: High Level Language](./chapter09) - Implementation of Snake in Jack
 
 Future chapters to be implemented:
-- Chapter 9: High Level Language
 - Chapter 10-11: Compiler
 - Chapter 12: Operating System
 
@@ -25,9 +25,10 @@ Future chapters to be implemented:
 All implementations are tested using the web-based tools available at [nand2tetris.github.io/web-ide/chip](https://nand2tetris.github.io/web-ide/chip). This provides an integrated development and testing environment that works directly in the browser, requiring no local software installation.
 
 The web IDE provides:
-- Hardware simulator for testing .hdl files (Chapters 1-5)
-- CPU Emulator for testing assembly programs (Chapter 4)
-- VM Emulator for testing VM implementations (Chapters 7-8)
+- Hardware simulator for testing `.hdl` files (Chapters 1-5)
+- CPU Emulator for testing assembly (`.asm`) programs (Chapter 4)
+- VM Emulator for testing VM (`.vm`) implementations (Chapters 7-8)
+- Jack Compiler for compiling Jack files (`.jack`) into VM files (`.vm`)
 - Built-in test scripts and comparison files
 
 ## Resources
