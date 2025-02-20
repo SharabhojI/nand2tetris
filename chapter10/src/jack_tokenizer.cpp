@@ -131,18 +131,33 @@ void JackTokenizer::advance() {
             currentPosition++;
         }
         currentToken = currentLine.substr(start, currentPosition - start);
+        // Check for integer overflow
+        try {
+            int value = std::stoi(currentToken);
+            if (value > 32767) { // Max value for Jack integers
+                throw std::runtime_error("Integer constant out of range: " + currentToken);
+            }
+        } catch (const std::out_of_range&) {
+            throw std::runtime_error("Integer constant out of range: " + currentToken);
+        }
         currentTokenType = TokenType::INT_CONST;
     }
     // Check if the current token is a string constant
     else if (currentChar == '"') {
-        currentPosition++; // Skip the opening quote
-        size_t start = currentPosition;
+        size_t start = currentPosition; // Keep the opening quote
+        currentPosition++; // Move past opening quote
         while (currentPosition < currentLine.length() && currentLine[currentPosition] != '"') {
+            if (currentLine[currentPosition] == '\n') {
+                throw std::runtime_error("String constant cannot span multiple lines");
+            }
             currentPosition++;
         }
+        if (currentPosition >= currentLine.length()) {
+            throw std::runtime_error("Unterminated string constant");
+        }
+        currentPosition++; // Include the closing quote
         currentToken = currentLine.substr(start, currentPosition - start);
         currentTokenType = TokenType::STRING_CONST;
-        currentPosition++; // Skip the closing quote
     }
     // Check if the current token is a keyword or identifier
     else if (std::isalpha(currentChar) || currentChar == '_') {

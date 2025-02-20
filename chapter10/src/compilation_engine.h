@@ -1,11 +1,21 @@
 #ifndef COMPILATION_ENGINE_H
 #define COMPILATION_ENGINE_H
 #include <fstream>
+#include <string>
+#include "jack_tokenizer.h"
 
 class CompilationEngine {
 private:
-    std::ifstream input_file;
+    JackTokenizer tokenizer;
     std::ofstream output_file;
+    int indentLevel;
+    
+    // Helper methods
+    void writeToken();
+    void writeXMLTag(const std::string& tag, bool isClosing);
+    void advance();
+    bool isOperator(char symbol);
+    void writeIndentation();
 
 public:
     CompilationEngine(std::string input_file, std::string output_file);

@@ -63,8 +63,6 @@ private:
     // Helper methods
     void skipWhitespace();
     void skipComments();
-    bool isSymbol(char c);
-    bool isDigit(char c); 
 };
 
 #endif
