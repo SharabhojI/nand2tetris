@@ -15,9 +15,10 @@ The repository is organized into chapters matching the book structure. Currently
 - [Chapter 7: Virtual Machine I](./chapter07) - Stack arithmetic VM implementation
 - [Chapter 8: Virtual Machine II](./chapter08) - Program control VM implementation
 - [Chapter 9: High Level Language](./chapter09) - Implementation of Snake in Jack
+- [Chapter 10: Compiler I](./chapter10) - Syntax Analysis
 
 Future chapters to be implemented:
-- Chapter 10-11: Compiler
+- Chapter 11: Compiler
 - Chapter 12: Operating System
 
 ## Testing

@@ -1,5 +1,12 @@
 #include "compilation_engine.h"
 #include <iostream>
+#include <vector>
+
+const std::vector<std::string> KEYWORDS = {
+    "class", "method", "function", "constructor", "int", "boolean", "char", "void",
+    "var", "static", "field", "let", "do", "if", "else", "while", "return", "true",
+    "false", "null", "this"
+};
 
 CompilationEngine::CompilationEngine(std::string input_file, std::string output_file) : 
     tokenizer(input_file), indentLevel(0) {
@@ -22,14 +29,16 @@ void CompilationEngine::writeXMLTag(const std::string& tag, bool isClosing) {
 
 void CompilationEngine::writeToken() {
     writeIndentation();
+
+    char sym;
     switch (tokenizer.tokenType()) {
         case JackTokenizer::KEYWORD:
-            output_file << "<keyword> " << tokenizer.keyWord() << " </keyword>" << std::endl;
+            output_file << "<keyword> " << KEYWORDS[tokenizer.keyWord()] << " </keyword>" << std::endl;
             break;
         case JackTokenizer::SYMBOL:
             output_file << "<symbol> ";
             // Handle special XML symbols
-            char sym = tokenizer.symbol();
+            sym = tokenizer.symbol();
             if (sym == '<') output_file << "&lt;";
             else if (sym == '>') output_file << "&gt;";
             else if (sym == '"') output_file << "&quot;";
